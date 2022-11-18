@@ -1,90 +1,66 @@
+const boton1 = document.getElementById("boton1")
 
-
-/** Clase jugador */
-class Jugador{
-    constructor(nombre, apellidos, nivel = 1, puntuacion = 1, vivo = true){
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.nivel = nivel;
-        this.puntuacion = puntuacion;
-
-}
-/**
- * Añade puntuacion si se le pasa que se ha eliminado a un zombie,
- * comprueba si tiene suficiente puntuacion llamando a la funcion auxiliar
- * comprobarPuntuacion
- * @param {boolean} zombieEliminado
- * @returns {any}
- * */
-    sumarPuntuacion(zombieEliminado){
-        if(zombieEliminado){
-            this.puntuacion++;
-            this.comprobarPuntuacion()
-     }
-  }
 
 /**
- * Funcion auxiliar de comprobarPuntuacion() que comprueba si es
- * suficiente para subir de nivel
- * @returns {any}*/
- *  comprobarPuntuacion(){
-    if(this.puntuacion > 11){
-        this.puntuacion = 1
-        this.nivel++
-    }
-  }
-
-/**
- * Funcion que resta puntuacion si se le pasa que un jugador ha sido alcanzado
- * llama a la funcion auxiliar resetearPuntuacion() para comprobar si el jugador
- * "muere" o ha perdido su puntuacion
+ * Funcion auxiliar que recibe un id de un elemento html y vacía
+ * su contenido
  * 
- * @param {boolean} jugadorAlcanzado
+ * @param {string} id
  * @returns {any}
- * */
-    restarPuntuacion(jugadorAlcanzado){
-        if(jugadorAlcanzado){
-            this.puntuacion--;
-            this.resetearPuntuacion()
-        }
-    }
-
-/**
- * Funcion auxiliar de restarPuntuacion() que comprueba si el jugador que ha
- * sido alcanzado tiene su puntuacion a 0, para entonces "resetear" al jugador
- * @returns {any}
- * */
-    resetearPuntuacion(){
-        if(this.puntuacion <= 0){
-            this.nivel = 1;
-            this.puntuacion = 1;
-            alert("El jugador "+this.nombre+" ha sido reseteado.");
-        }
-        
-    }
-
+ */
+function clear(id){
+    document.getElementById(id).innerHTML = ""
 }
 
-let willyrex = new Jugador("Willyrex","Zubeldia");
-let paco = new Jugador("Paco","Pouso");
+/**
+ * Funcion que calcula el numero de años bisiestos entre los años 
+ * 2001 y 2500. Maneja las excepciones y hace las transformaciones
+ * necesarias para que los parámetros introducidos sean correctos.
+ * 
+ * @param {number} year1
+ * @param {number} year2
+ * @returns {array}
+ */
+function isLeapYear(year1,year2){
+    clear()
+    Number.parseInt(year1)
+    Number.parseInt(year2)
+    if(year1%1 != 0){
+        document.getElementById("resultado").innerHTML = "Eso no es un numero"
+    }
+    if(year2%1 != 0){
+        document.getElementById("resultado").innerHTML = "Eso no es un numero"
+    }
 
-willyrex.sumarPuntuacion(true)
-willyrex.sumarPuntuacion(true)
-willyrex.sumarPuntuacion(true)
-willyrex.sumarPuntuacion(true)
-willyrex.sumarPuntuacion(true)
-willyrex.sumarPuntuacion(true)
-willyrex.sumarPuntuacion(true)
-willyrex.sumarPuntuacion(true)
-willyrex.sumarPuntuacion(true)
-willyrex.sumarPuntuacion(true)
-willyrex.sumarPuntuacion(true)
+    //Compruebo si es numero
+    if(!isNaN(year1) || !isNaN(year2)){
+        //Compruebo si es decimal
+        if(year1%1 != 0){
+            year1 = Math.floor(year1)
+        }
+        if(year2%1 != 0){
+            year2 = Math.floor(year2)
+        }
 
-willyrex.restarPuntuacion(true)
-console.log(willyrex.puntuacion)
+        if(year1>2001 && year2 < 2500){
+            let bisiestos = []
+            for(i = year1; i< year2; i++){
+                if(i%4 == 0){
+                    bisiestos.push(i)
+                }
+            }
+            document.getElementById("resultado").innerHTML = bisiestos.join(', ')
+            
+        }else{
+            document.getElementById("resultado").innerHTML = "Rango de numeros no válido"
+        }
 
-console.log(willyrex._puntuacion);
+    }else{
+        alert("No es un numero")}
+    
+}
 
-const jugadoresTestArray = [willyrex, paco]
-
-jugadoresTestArray.map(sumarPuntuacion(true))
+boton1.addEventListener('click',() => {
+    isLeapYear(document.getElementById("year1").value,document.getElementById("year2").value);
+     }
+    )
