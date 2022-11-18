@@ -1,5 +1,8 @@
 const boton1 = document.getElementById("boton1")
 
+const input1 = document.getElementById("year1").value
+const input2 = document.getElementById("year2").value
+
 
 /**
  * Funcion auxiliar que recibe un id de un elemento html y vacía
@@ -22,7 +25,7 @@ function clear(id){
  * @returns {array}
  */
 function isLeapYear(year1,year2){
-    clear()
+    clear("resultado")
     Number.parseInt(year1)
     Number.parseInt(year2)
     if(year1%1 != 0){
@@ -61,6 +64,6 @@ function isLeapYear(year1,year2){
 }
 
 boton1.addEventListener('click',() => {
-    isLeapYear(document.getElementById("year1").value,document.getElementById("year2").value);
+    isLeapYear(input1,input2);
      }
     )
